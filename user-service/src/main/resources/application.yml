@@ -1,0 +1,48 @@
+server:
+  port: 9292
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userService:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 100ms
+        permittedNumberOfCallsInHalfOpenState: 1
+        slidingWindowSize: 4
+        slidingWindowType: COUNT_BASED
+        recordExceptions:  org.springframework.web.client.ResourceAccessException
+
+  retry:
+    instances:
+      userService:
+        maxRetryAttempts: 5
+        waitDuration: 10s
+
+
+user-service:
+  connect-timeout: 5000
+  read-timeout: 5000
+
+
+
+
+
+
+
+
