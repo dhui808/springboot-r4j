@@ -3,6 +3,9 @@ package com.example.us;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,8 +27,10 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/user-service")
 public class UserServiceApplication {
-
-    @Autowired
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceApplication.class);
+    
+	@Autowired
     @Lazy
     private RestTemplate restTemplate;
 
@@ -33,15 +38,11 @@ public class UserServiceApplication {
 
     private static final String BASEURL = "http://localhost:9191/orders";
 
-    private int attempt=1;
-
-
     @GetMapping("/displayOrders")
     @CircuitBreaker(name =USER_SERVICE)
-    //@Retry(name = USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
     public List<OrderDTO> displayOrders(@RequestParam("category") String category) {
         String url = category == null ? BASEURL : BASEURL + "/" + category;
-        System.out.println("retry method called "+attempt++ +" times "+" at "+new Date());
+        logger.debug("displayOrders called ");
         return restTemplate.getForObject(url, ArrayList.class);
     }
 
@@ -61,6 +62,4 @@ public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);
     }
-
-
 }

@@ -9,7 +9,10 @@ import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +23,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping("/orders")
 public class MockCatalogServiceController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MockCatalogServiceController.class);
+
     @Autowired
     private OrderRepository orderRepository;
+    @Value(value = "${jobs-json-path}")
+    private String jobsJsonPath;
+    @Value(value = "${thread-sleep:5000}")
+    private int threadSleep;
     private List<Map<String, Integer>> jobs;
     private int counter;
     private int subcounter;
@@ -47,6 +57,7 @@ public class MockCatalogServiceController {
 	@GetMapping("/{category}")
 	public List<Order> getOrdersByCategory(@PathVariable String category){
 		
+		logger.debug("getOrdersByCategory called.");
 		Map<String, Integer> map = jobs.get(counter);
 		String scenario = map.keySet().iterator().next();
 		int i = map.get(scenario);
@@ -69,10 +80,10 @@ public class MockCatalogServiceController {
 
     private List<Order> getOrderByScenario(String scenario, String category) {
     	
-    	System.err.println("Scenario " + scenario);
+    	logger.debug("Scenario " + scenario);
     	if ("timeout".equals(scenario)) {
     		try {
-				Thread.sleep(10000);
+				Thread.sleep(threadSleep);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -87,7 +98,7 @@ public class MockCatalogServiceController {
     	ObjectMapper mapper = new ObjectMapper();
     	
     	try {
-			jobs = mapper.readValue(Paths.get("/opt/r4j/jobs.json").toFile(), List.class);
+			jobs = mapper.readValue(Paths.get(jobsJsonPath).toFile(), List.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

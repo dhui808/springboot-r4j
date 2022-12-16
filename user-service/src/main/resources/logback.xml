@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="HOME_LOG" value="/opt/springboot-r4j/logs/user-service.log"/>
-    <property name="R4J_LOG" value="/opt/springboot-r4j/logs/user-service-r4j.log"/>
+	<property name="LOGS" value="/opt/springboot-r4j-logs"/>
+    <property name="HOME_LOG" value="${LOGS}/user-service.log"/>
+    <property name="R4J_LOG" value="${LOGS}/user-service-r4j.log"/>
 
     <appender name="r4j" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${R4J_LOG}</file>

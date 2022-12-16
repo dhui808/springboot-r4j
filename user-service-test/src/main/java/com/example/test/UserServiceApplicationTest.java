@@ -3,17 +3,19 @@ package com.example.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
 public class UserServiceApplicationTest {
+
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceApplicationTest.class);
 
 	private static int volume = 60;
     //private RestTemplate restTemplate = new RestTemplate();
@@ -33,7 +35,6 @@ public class UserServiceApplicationTest {
         List<Mono<JsonNode>> list = new ArrayList<Mono<JsonNode>>();
         
         for (int i = 1; i <= volume; i++ ) {
-        	//list = restTemplate.getForObject(url, ArrayList.class);
         	fl = client.get().uri(uriBuilder -> uriBuilder
         		    .path("/user-service/displayOrders")
         		    .queryParam("category", category)
@@ -42,6 +43,8 @@ public class UserServiceApplicationTest {
             .bodyToMono(JsonNode.class);
         	
         	list.add(fl);
+        	
+        	logger.debug(i + " Request sent.");
         	
         	try {
 				Thread.sleep(500);
@@ -54,9 +57,9 @@ public class UserServiceApplicationTest {
         	Mono<JsonNode> monoNode = list.get(i);
         	try {
         	JsonNode node = monoNode.block();
-        	System.err.println( i + 1 + " " + node.toString());
+        	logger.debug( i + 1 + " " + node.toString());
         	} catch (Exception e) {
-        		System.err.println(i + 1 + " exception: " + e.getMessage());
+        		logger.debug(i + 1 + " exception: " + e.getMessage());
         	}
         }
         

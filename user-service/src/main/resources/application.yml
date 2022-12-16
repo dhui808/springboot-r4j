@@ -1,5 +1,8 @@
 server:
   port: 9292
+  tomcat:
+    threads:
+      min-spare: 10
 management:
   health:
     circuitbreakers:
@@ -20,11 +23,11 @@ resilience4j:
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
         failureRateThreshold: 50
-        minimumNumberOfCalls: 2
+        minimumNumberOfCalls: 10
         automaticTransitionFromOpenToHalfOpenEnabled: true
         waitDurationInOpenState: 100ms
         permittedNumberOfCallsInHalfOpenState: 1
-        slidingWindowSize: 4
+        slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
         recordExceptions:  org.springframework.web.client.ResourceAccessException
 
@@ -37,7 +40,7 @@ resilience4j:
 
 user-service:
   connect-timeout: 5000
-  read-timeout: 5000
+  read-timeout: 10000
 
 
 

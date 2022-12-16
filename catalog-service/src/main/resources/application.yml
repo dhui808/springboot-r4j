@@ -8,3 +8,6 @@ spring:
     console:
       enabled: true
       path: /h2
+
+jobs-json-path: /opt/springboot-r4j/catalog-service/src/main/resources/jobs.json      
+thread-sleep: 11000
