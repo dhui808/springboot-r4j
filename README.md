@@ -13,8 +13,9 @@ Springboot and Resilience4J
 	From commandline:
 	run-test.cmd 40 > tmp.txt
 ### Note
-	Have to use commandline to send a number of requests.
-	Alternatively, run UserServiceApplicationTest and pass the desired volume. However, Looks like WebClient 
-	does not send all requests asynchronously.
+	Have to use commandline to send a number of requests. (40 requests, 16 seconds)
+	Alternatively, run UserServiceApplicationTest and pass the desired volume. (40 requests, 20 seconds)
+	(Why is WebClient not faster when sending all 40 request async???)
+	
 	 
 	 
