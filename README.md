@@ -13,8 +13,11 @@ Springboot and Resilience4J
 	From commandline:
 	run-test.cmd 40 > tmp.txt
 ### Note
-	Use commandline to send a number of requests. (1000 requests, 885 seconds, received all responses 875 seconds)
-	Alternatively, run UserServiceWebClientApplicationTest and pass the desired volume. (1000 requests, 601 seconds, received all responses 9 seconds)
-	Alternatively, run UserServiceRestteApplicationTest and pass the desired volume. (1000 requests, 9 seconds, received all responses 9 seconds)
+	Use commandline to send a number of requests. (1000 requests, 885 seconds,
+	received all responses 875 seconds)
+	Alternatively, run UserServiceWebClientApplicationTest and pass the desired 
+	volume. (1000 requests, 601 seconds, received all responses 9 seconds)
+	Alternatively, run UserServiceRestteApplicationTest and pass the desired volume. 
+	(1000 requests, 9 seconds, received all responses 9 seconds)
 	 
 	 
