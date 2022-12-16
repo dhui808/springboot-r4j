@@ -21,7 +21,17 @@
             <pattern>%d %p %c{1.} [%t] %m%n</pattern>
         </encoder>
     </appender>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+    
     <root level="debug">
         <appender-ref ref="FILE-ROLLING"/>
+    </root>
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
