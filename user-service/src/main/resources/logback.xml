@@ -41,11 +41,20 @@
         </encoder>
     </appender>
 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+    
 	<logger name="io.github.resilience4j.circuitbreaker" level="DEBUG">
 		<appender-ref ref="r4j"/>
 	</logger>
 
     <root level="debug">
         <appender-ref ref="FILE-ROLLING"/>
+    </root>
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
