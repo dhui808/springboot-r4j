@@ -1,16 +1,18 @@
 package com.example.us;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class OrderDTO {
+	@NonNull
     private int id;
+	@NonNull
     private String name;
+	@NonNull
     private String category;
+	@NonNull
     private String color;
+	@NonNull
     private double price;
 }
