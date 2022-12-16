@@ -8,7 +8,8 @@
   <packaging>pom</packaging>
 	
   <modules>
-  	<module>user-service-test</module>
+	<module>user-service-resttemplate-test</module>
+	<module>user-service-webclient-test</module>
   	<module>user-service</module>
 	<module>catalog-service</module>
   </modules>

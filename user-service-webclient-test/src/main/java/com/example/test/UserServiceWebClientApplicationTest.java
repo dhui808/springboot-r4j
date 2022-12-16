@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import reactor.core.publisher.Mono;
 
 
-public class UserServiceApplicationTest {
+public class UserServiceWebClientApplicationTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceApplicationTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceWebClientApplicationTest.class);
 
-	private static int volume = 60;
+	private static int volume = 40;
     //private RestTemplate restTemplate = new RestTemplate();
     private static WebClient.Builder builder = WebClient.builder();
     
@@ -68,6 +68,6 @@ public class UserServiceApplicationTest {
     
     public static void main(String[] args) {
     	if (args.length > 0) volume = Integer.parseInt(args[0]);
-        new UserServiceApplicationTest().displayOrders("electronics");
+        new UserServiceWebClientApplicationTest().displayOrders("electronics");
     }
 }
