@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -34,13 +35,14 @@ public class UserServiceWebClientApplicationTest {
         Mono<JsonNode> fl = null;
         List<Mono<JsonNode>> list = new ArrayList<Mono<JsonNode>>();
         
+        ResponseSpec responseSpec = client.get().uri(uriBuilder -> uriBuilder
+    		    .path("/user-service/displayOrders")
+    		    .queryParam("category", category)
+    		    .build()).accept(MediaType.APPLICATION_JSON)
+        		.retrieve();
+        
         for (int i = 1; i <= volume; i++ ) {
-        	fl = client.get().uri(uriBuilder -> uriBuilder
-        		    .path("/user-service/displayOrders")
-        		    .queryParam("category", category)
-        		    .build()).accept(MediaType.APPLICATION_JSON)
-            .retrieve()
-            .bodyToMono(JsonNode.class);
+        	fl = responseSpec.bodyToMono(JsonNode.class);
         	
         	list.add(fl);
         	
